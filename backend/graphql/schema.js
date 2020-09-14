@@ -1,7 +1,17 @@
 import { ApolloServer } from 'apollo-server-express'
+import { loadFilesSync } from '@graphql-tools/load-files'
+import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge'
+import path from 'path'
+
+import models from '../models'
+
 // Imports: GraphQL TypeDefs & Resolvers
-import resolvers from './resolvers'
-import typeDefs from './typeDefs'
+const typeDefs = mergeTypeDefs(
+  loadFilesSync(path.join(__dirname, './typeDefs')),
+)
+const resolvers = mergeResolvers(
+  loadFilesSync(path.join(__dirname, './resolvers')),
+)
 
 // GraphQL: Schema
 const server = new ApolloServer({
@@ -12,6 +22,11 @@ const server = new ApolloServer({
     settings: {
       'editor.theme': 'dark',
     },
+  },
+  context: {
+    models,
+    // TODO: JWT TOKEN으로 user 정보 넣어주기.
+    user: 1,
   },
 })
 
