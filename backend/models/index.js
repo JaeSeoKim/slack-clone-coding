@@ -8,7 +8,9 @@ if (NODE_ENV === 'development') dotenv.config()
 const DATABASE_URI =
   process.env.DATABASE_URI || 'postgres://slack:slack@localhost:5432/slack'
 
-const sequelize = new Sequelize(DATABASE_URI)
+const sequelize = new Sequelize(DATABASE_URI, {
+  underscore: true,
+})
 
 const models = {
   User: require('./user').default(sequelize, Sequelize.DataTypes),
