@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
 import Routes from './routes'
+import 'semantic-ui-css/semantic.min.css'
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',

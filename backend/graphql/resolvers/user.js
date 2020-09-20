@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt'
+
 export default {
   Query: {
     getUser: (_parent, { id }, { models }) =>
@@ -5,6 +7,14 @@ export default {
     allUsers: (_parent, _args, { models }) => models.User.findAll(),
   },
   Mutation: {
-    createUser: (_parent, args, { models }) => models.User.create(args),
+    register: async (_parent, { password, ...args }, { models }) => {
+      try {
+        const hashedPasswd = await bcrypt.hash(password, 12)
+        await models.User.create({ password: hashedPasswd, ...args })
+        return true
+      } catch (error) {
+        return false
+      }
+    },
   },
 }
