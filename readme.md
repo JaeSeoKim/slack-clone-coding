@@ -14,6 +14,8 @@
 - docker
 
 
-## Frontend
+## [Frontend](./frontend/)
 - React
-- ...
+- apollo/client
+- graphql
+- semantic (ui/css)
