@@ -6,12 +6,8 @@ import path from 'path'
 import models from '../models'
 
 // Imports: GraphQL TypeDefs & Resolvers
-const typeDefs = mergeTypeDefs(
-  loadFilesSync(path.join(__dirname, './typeDefs')),
-)
-const resolvers = mergeResolvers(
-  loadFilesSync(path.join(__dirname, './resolvers')),
-)
+const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')))
+const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')))
 
 // GraphQL: Schema
 const server = new ApolloServer({

@@ -12,7 +12,7 @@ export default () => {
     emailError: '',
     passwordError: '',
   })
-  const [queryRegister] = useMutation(registerMutation)
+  const [mutateRegister] = useMutation(registerMutation)
   const history = useHistory()
 
   const onChangeUserName = e => setState({ ...state, username: e.target.value })
@@ -27,7 +27,7 @@ export default () => {
       emailError: '',
       passwordError: '',
     })
-    const response = await queryRegister({
+    const response = await mutateRegister({
       variables: { username, email, password },
     })
 
@@ -41,7 +41,7 @@ export default () => {
         err[`${path}Error`] = message
       })
 
-      setState({ ...state, ...err })
+      setState({ ...state, ...{ usernameError: '', emailError: '', passwordError: '' }, ...err })
     }
 
     console.log(response)

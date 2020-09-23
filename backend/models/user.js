@@ -25,8 +25,8 @@ export default sequelize => {
           msg: 'Invaild email',
         },
       },
-      password: DataTypes.STRING,
     },
+    password: DataTypes.STRING,
   })
 
   User.associate = models => {

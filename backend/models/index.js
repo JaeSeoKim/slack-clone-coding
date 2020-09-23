@@ -5,8 +5,7 @@ import dotenv from 'dotenv'
 const NODE_ENV = process.env.NODE_ENV || 'development'
 if (NODE_ENV === 'development') dotenv.config()
 
-const DATABASE_URI =
-  process.env.DATABASE_URI || 'postgres://slack:slack@localhost:5432/slack'
+const DATABASE_URI = process.env.DATABASE_URI || 'postgres://slack:slack@localhost:5432/slack'
 
 const sequelize = new Sequelize(DATABASE_URI, {
   define: {

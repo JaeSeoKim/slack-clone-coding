@@ -19,8 +19,4 @@ apolloServer.applyMiddleware({ app })
 
 models.sequelize
   .sync({})
-  .then(() =>
-    app.listen(PORT, () =>
-      console.log(`Server Listen on : http://localhost:${PORT}/`),
-    ),
-  )
+  .then(() => app.listen(PORT, () => console.log(`Server Listen on : http://localhost:${PORT}/`)))

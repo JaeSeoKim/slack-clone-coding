@@ -1,5 +1,11 @@
 import bcrypt from 'bcrypt'
 import _ from 'lodash'
+import dotenv from 'dotenv'
+
+import { tryLogin } from '../../lib/auth'
+
+const NODE_ENV = process.env.NODE_ENV || 'development'
+if (NODE_ENV === 'development') dotenv.config()
 
 const formatErrors = (e, models) => {
   if (e instanceof models.Sequelize.ValidationError) {
@@ -10,8 +16,7 @@ const formatErrors = (e, models) => {
 
 export default {
   Query: {
-    getUser: (_parent, { id }, { models }) =>
-      models.User.findOne({ where: { id } }),
+    getUser: (_parent, { id }, { models }) => models.User.findOne({ where: { id } }),
     allUsers: (_parent, _args, { models }) => models.User.findAll(),
   },
   Mutation: {
@@ -23,14 +28,14 @@ export default {
             errors: [
               {
                 path: 'password',
-                message:
-                  'The password needs to be between 5 and 100 characters long',
+                message: 'The password needs to be between 5 and 100 characters long',
               },
             ],
           }
         }
 
         const hashedPassword = await bcrypt.hash(password, 12)
+
         const user = await models.User.create({
           ...otherArgs,
           password: hashedPassword,
@@ -47,5 +52,7 @@ export default {
         }
       }
     },
+
+    login: (_parent, { email, password }, { models }) => tryLogin(email, password, models, process.env.JWT_SECRET),
   },
 }
