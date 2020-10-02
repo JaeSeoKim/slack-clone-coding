@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { Message, Button, Container, Header, Input } from 'semantic-ui-react'
+import { Message, Button, Container, Header, Input, Form } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
 
 export default () => {
@@ -31,6 +31,9 @@ export default () => {
       variables: { username, email, password },
     })
 
+    // :LOG:
+    console.log('[register]', response)
+
     const { ok, errors } = response.data.register
 
     if (ok) {
@@ -43,39 +46,32 @@ export default () => {
 
       setState({ ...state, ...{ usernameError: '', emailError: '', passwordError: '' }, ...err })
     }
-
-    console.log(response)
   }
 
   return (
     <Container text>
       <Header as="h2">Register - Page</Header>
-      <Input
-        error={!!state.usernameError}
-        value={state.username}
-        onChange={onChangeUserName}
-        name="username"
-        placeholder="UserName"
-        fluid
-      />
-      <Input
-        error={!!state.emailError}
-        value={state.email}
-        onChange={onChangeEmail}
-        name="email"
-        placeholder="Email"
-        fluid
-      />
-      <Input
-        error={!!state.passwordError}
-        value={state.password}
-        onChange={onChangePassword}
-        name="password"
-        type="password"
-        placeholder="Password"
-        fluid
-      />
-      <Button onClick={handleSubmit}>Submit</Button>
+      <Form>
+        <Form.Field error={!!state.usernameError}>
+          <Input value={state.username} onChange={onChangeUserName} name="username" placeholder="UserName" fluid />
+        </Form.Field>
+        <Form.Field error={!!state.emailError}>
+          <Input value={state.email} onChange={onChangeEmail} name="email" placeholder="Email" fluid />
+        </Form.Field>
+        <Form.Field error={!!state.passwordError}>
+          <Input
+            value={state.password}
+            onChange={onChangePassword}
+            name="password"
+            type="password"
+            placeholder="Password"
+            fluid
+          />
+        </Form.Field>
+        <Form.Field>
+          <Button onClick={handleSubmit}>Submit</Button>
+        </Form.Field>
+      </Form>
       {state.usernameError || state.emailError || state.passwordError ? (
         <Message
           error

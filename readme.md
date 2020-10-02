@@ -18,4 +18,5 @@
 - React
 - apollo/client
 - graphql
+- mobx
 - semantic (ui/css)
